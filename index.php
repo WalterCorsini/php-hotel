@@ -1,4 +1,5 @@
 <?php
+$hotels_filtered=[];
 $hotels = [
 
     [
@@ -59,15 +60,26 @@ $hotels = [
     <form action="index.php" method="POST">
         <input type="text" name="search">
         <button type="submit">click</button>
+        <label for="park">parcheggio</label>
+        <input id="park" name="park_required" type="checkbox">
     </form>
 
     <?php if (!empty($_POST["search"]) || !isset($_POST["search"])){ ?>
+        <?php if(isset($_POST['park_required'])){?>
+            <h1>ciao</h1>
+        <?php $hotel_filtered = array_filter($hotels , function($hotels) { return $hotels["parking"]; }) ; ?>
+        <?php } else{ ?>
+        <?php $hotel_filtered = $hotels; ?>
+        <?php } ?>
+
+        <!-- table -->
         <table class="table">
             <tbody>
-                <?php foreach ($hotels as $cur_hotel) { ?>
+                <?php foreach ($hotel_filtered as $cur_hotel) { ?>
                     <tr>
                         <?php foreach ($cur_hotel as $key => $value) { ?>
                             <td scope="row">
+                                <?php if($value === true){ $value = "si"; } elseif($value === false) { $value = "no"; } ?>
                                 <?php echo "$key : $value"; ?>
                             </td>
                         <?php } ?>
@@ -75,6 +87,7 @@ $hotels = [
                 <?php } ?>
             </tbody>
         </table>
+        <!-- /table -->
         <?php } else { ?>
             <p> insrisci qualcosa per la ricerca</p>
     <?php } ?>
