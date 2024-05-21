@@ -1,3 +1,13 @@
+body{
+    background-image: url(../img/sfondo.jpeg);
+    background-size: cover;
+}
+
 .gold{
     color: gold;
+}
+
+input{
+    border: 0;
+    outline-width: 0;
 }
