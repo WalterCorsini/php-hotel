@@ -58,19 +58,20 @@ $hotels = [
 
 <body>
     <form action="index.php" method="POST">
-        <input type="text" name="search">
         <button type="submit">click</button>
         <label for="park">parcheggio</label>
         <input id="park" name="park_required" type="checkbox">
+        <input id="voto" name="voto" type="number" min="1" max="5">
+        <label for="voto"></label>
     </form>
 
-    <?php if (!empty($_POST["search"]) || !isset($_POST["search"])){ ?>
         <?php if(isset($_POST['park_required'])){?>
-            <h1>ciao</h1>
         <?php $hotel_filtered = array_filter($hotels , function($hotels) { return $hotels["parking"]; }) ; ?>
         <?php } else{ ?>
         <?php $hotel_filtered = $hotels; ?>
         <?php } ?>
+        <?php $hotel_filtered = array_filter($hotels , function($hotels) { return $hotels["vote"] >= $_POST["voto"]; }) ; ?>
+
 
         <!-- table -->
         <table class="table">
@@ -88,9 +89,6 @@ $hotels = [
             </tbody>
         </table>
         <!-- /table -->
-        <?php } else { ?>
-            <p> insrisci qualcosa per la ricerca</p>
-    <?php } ?>
 
 </body>
 
