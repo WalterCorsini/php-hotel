@@ -1,4 +1,5 @@
 <?php
+$count= 0;
 $hotels_filtered=[];
 $hotels = [
 
@@ -56,31 +57,36 @@ $hotels = [
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
-<body>
+<body class="p-5 d-flex justify-content-center align-items-center flex-column">
     <form action="index.php" method="POST">
-        <button type="submit">click</button>
-        <label for="park">parcheggio</label>
+        <div class="form-container">
+        <button type="submit">Avvia Ricerca</button>
         <input id="park" name="park_required" type="checkbox">
-        <input id="voto" name="voto" type="number" min="1" max="5">
-        <label for="voto"></label>
+        <label for="park">parcheggio</label>
+        <input id="voto" name="vote" type="number" min="1" max="5" value="1">
+        <label for="voto">voto da 1 a 5</label>
+        </div>
     </form>
 
         <?php if(isset($_POST['park_required'])){?>
-        <?php $hotel_filtered = array_filter($hotels , function($hotels) { return $hotels["parking"]; }) ; ?>
+        <?php $hotels_filtered = array_filter($hotels , function($hotels) { return $hotels["parking"]; }) ; ?>
         <?php } else{ ?>
-        <?php $hotel_filtered = $hotels; ?>
+        <?php $hotels_filtered = $hotels; ?>
         <?php } ?>
-        <?php $hotel_filtered = array_filter($hotels , function($hotels) { return $hotels["vote"] >= $_POST["voto"]; }) ; ?>
+        <?php if(isset($_POST["vote"])){?>
+        <?php $hotels_filtered = array_filter($hotels_filtered , function($hotels_filtered) { return $hotels_filtered["vote"] >= $_POST["vote"]; }) ; ?>
+        <?php }?>
 
-
+        <?php if(count($hotels_filtered)>0){ ?>
         <!-- table -->
-        <table class="table">
+        <table class="table w-75 m-auto">
             <tbody>
-                <?php foreach ($hotel_filtered as $cur_hotel) { ?>
+                <?php foreach ($hotels_filtered as $cur_hotel) { ?>
                     <tr>
                         <?php foreach ($cur_hotel as $key => $value) { ?>
                             <td scope="row">
                                 <?php if($value === true){ $value = "si"; } elseif($value === false) { $value = "no"; } ?>
+                                <?php if($key === "distance_to_center"){ $value.= " km"; } ?>
                                 <?php echo "$key : $value"; ?>
                             </td>
                         <?php } ?>
@@ -89,6 +95,10 @@ $hotels = [
             </tbody>
         </table>
         <!-- /table -->
+        <?php } else{ ?>
+        <h1 class="pt-5">nessun hotel trovato!</h1>
+        <?php } ?>
+
 
 </body>
 
