@@ -65,15 +65,16 @@ $hotels = [
     <form class="pb-5 w-100 d-flex justify-content-center align-items-center gap-5" action="index.php" method="POST">
 
         
-        <button type="submit" class="btn btn-outline-success rounded-5">Success</button>
+        <button type="submit" class="btn btn-outline-success rounded-5">Cerca</button>
         
         <div class="d-flex flex-column justify-content-center align-items-center gap-3">
             <div>
             <input class="rounded-5 p-2" id="voto" name="vote" type="number" min="1" max="5" value="1">
             <label for="voto">voto da 1 a 5</label>
             </div>
-            <div>
+            <div class="container">
                 <input id="park" name="park_required" type="checkbox">
+                <span class="checkbox"></span>
                 <label for="park">parcheggio</label>
             </div>
         </div>
