@@ -61,15 +61,12 @@ $hotels = [
 
 <body class="p-5 d-flex justify-content-center align-items-center flex-column">
     <form class="pb-5" action="index.php" method="POST">
-        <div class="form-container">
         <button type="submit">Avvia Ricerca</button>
-        <i class="fa-solid fa-check"></i>
-
         <input id="park" name="park_required" type="checkbox">
         <label for="park">parcheggio</label>
         <input id="voto" name="vote" type="number" min="1" max="5" value="1">
         <label for="voto">voto da 1 a 5</label>
-        </div>
+
     </form>
 
         <?php if(isset($_POST['park_required'])){?>
@@ -104,7 +101,7 @@ $hotels = [
                                     $copy=$value;
                                     $value="";
                                     for($i=0; $i<$copy; $i++){
-                                        $value .= "&#9733;";
+                                        $value .= "<span class=gold>&#9733;</span>";
                                     }
                                     for($i=0; $i<5-$copy; $i++){
                                         $value .= "&#9734;";
@@ -112,13 +109,7 @@ $hotels = [
                                 }
                                 ?>
                                 
-                                <?php if($key !== "vote"){
-                                    echo $value;
-                                }  else {
-                                    $value= "<span class='gold'> $value </span>";
-                                    echo $value;
-                                }
-                                 ?>
+                                <?php echo $value; ?>
                             </td>
                         <?php } ?>
                     </tr>
