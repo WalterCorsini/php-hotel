@@ -3,39 +3,39 @@ $hotels_filtered = [];
 $hotels = [
 
     [
-        'name' => 'Hotel Belvedere',
-        'description' => 'Hotel Belvedere Descrizione',
-        'parking' => true,
-        'vote' => 4,
-        'distance_to_center' => 10.4
+        'nome' => 'Hotel Belvedere',
+        'descrizione' => 'Hotel Belvedere Descrizione',
+        'parcheggio' => true,
+        'voto' => 4,
+        'distanza dal centro' => 10.4
     ],
     [
-        'name' => 'Hotel Futuro',
-        'description' => 'Hotel Futuro Descrizione',
-        'parking' => true,
-        'vote' => 2,
-        'distance_to_center' => 2
+        'nome' => 'Hotel Futuro',
+        'descrizione' => 'Hotel Futuro Descrizione',
+        'parcheggio' => true,
+        'voto' => 2,
+        'distanza dal centro' => 2
     ],
     [
-        'name' => 'Hotel Rivamare',
-        'description' => 'Hotel Rivamare Descrizione',
-        'parking' => false,
-        'vote' => 1,
-        'distance_to_center' => 1
+        'nome' => 'Hotel Rivamare',
+        'descrizione' => 'Hotel Rivamare Descrizione',
+        'parcheggio' => false,
+        'voto' => 1,
+        'distanza dal centro' => 1
     ],
     [
-        'name' => 'Hotel Bellavista',
-        'description' => 'Hotel Bellavista Descrizione',
-        'parking' => false,
-        'vote' => 5,
-        'distance_to_center' => 5.5
+        'nome' => 'Hotel Bellavista',
+        'descrizione' => 'Hotel Bellavista Descrizione',
+        'parcheggio' => false,
+        'voto' => 5,
+        'distanza dal centro' => 5.5
     ],
     [
-        'name' => 'Hotel Milano',
-        'description' => 'Hotel Milano Descrizione',
-        'parking' => true,
-        'vote' => 2,
-        'distance_to_center' => 50
+        'nome' => 'Hotel Milano',
+        'descrizione' => 'Hotel Milano Descrizione',
+        'parcheggio' => true,
+        'voto' => 2,
+        'distanza dal centro' => 50
     ],
 
 ];
@@ -68,13 +68,13 @@ $hotels = [
 
         <!-- choice -->
         <div class="d-flex flex-column justify-content-center align-items-center gap-3">
-            <!-- search by vote -->
+            <!-- search by voto -->
             <div class="">
-                <input class="rounded-5 p-2" id="voto" name="vote" type="number" min="1" max="5" value="1">
+                <input class="rounded-5 p-2" id="voto" name="voto" type="number" min="1" max="5" value="1">
                 <label for="voto">Qualità: da 1 a 5 stelle</label>
             </div>
 
-            <!-- add parking required -->
+            <!-- add parcheggio required -->
             <div class="container">
                 <input id="park" name="park_required" type="checkbox">
                 <label for="park">parcheggio</label>
@@ -88,7 +88,7 @@ $hotels = [
     <!-- control park_required -->
     <?php if (isset($_POST['park_required'])) { ?>
         <?php $hotels_filtered = array_filter($hotels, function ($hotels) {
-            return $hotels["parking"];
+            return $hotels["parcheggio"];
         }); ?>
 
     <!-- else -->
@@ -96,10 +96,10 @@ $hotels = [
         <?php $hotels_filtered = $hotels; ?>
     <?php } ?>
 
-    <!-- vote key check at startup and filter by vote -->
-    <?php if (isset($_POST["vote"])) { ?>
+    <!-- voto key check at startup and filter by voto -->
+    <?php if (isset($_POST["voto"])) { ?>
         <?php $hotels_filtered = array_filter($hotels_filtered, function ($hotels_filtered) {
-            return $hotels_filtered["vote"] >= $_POST["vote"];
+            return $hotels_filtered["voto"] >= $_POST["voto"];
         }); ?>
     <?php } ?>
     
@@ -112,11 +112,9 @@ $hotels = [
             <!-- thead -->
             <thead>
                 <tr>
-                    <th>Nome</th>
-                    <th>Descrizione</th>
-                    <th>Parcheggio</th>
-                    <th>Valutazione</th>
-                    <th>Ditanza dal centro</th>
+                    <?php foreach(array_keys($hotels[0]) as $key) { ?>
+                    <th><?php echo $key; ?></th>
+                    <?php } ?>
                 </tr>
             </thead>
             <!-- /thead -->
@@ -127,22 +125,22 @@ $hotels = [
                     <tr>
                         <?php foreach ($cur_hotel as $key => $value) { ?>
                             <td scope="row">
-                                <!-- check or cross for parking -->
+                                <!-- check or cross for parcheggio -->
                                 <?php if ($value === true) {
                                     $value = "<span style=color:green>&check;</span>";
                                 } elseif ($value === false) {
                                     $value = "<span style=color:red>&cross;</span>";
                                 } ?>
-                                <!-- /check or cross for parking -->
+                                <!-- /check or cross for parcheggio -->
 
                                 <!-- add "km" at distance -->
-                                <?php if ($key === "distance_to_center") {
+                                <?php if ($key === "distanza dal centro") {
                                     $value .= " km";
                                 } ?>
                                 <!-- /add "km" at distance -->
 
                                 <!-- add star -->
-                                <?php if ($key === "vote") {
+                                <?php if ($key === "voto") {
                                     $copy = $value;
                                     $value = "";
                                     for ($i = 0; $i < $copy; $i++) {
