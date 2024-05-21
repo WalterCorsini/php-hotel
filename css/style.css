@@ -1,11 +1,3 @@
-span{
-    display: block;
-}
-.form-container{
-    display: flex;
-    background-color: aqua;
-}
-
-body{
-    background-color: aqua;
+.gold{
+    color: gold;
 }

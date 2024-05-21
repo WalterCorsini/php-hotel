@@ -53,14 +53,18 @@ $hotels = [
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <!-- style css -->
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body class="p-5 d-flex justify-content-center align-items-center flex-column">
-    <form action="index.php" method="POST">
+    <form class="pb-5" action="index.php" method="POST">
         <div class="form-container">
         <button type="submit">Avvia Ricerca</button>
+        <i class="fa-solid fa-check"></i>
+
         <input id="park" name="park_required" type="checkbox">
         <label for="park">parcheggio</label>
         <input id="voto" name="vote" type="number" min="1" max="5" value="1">
@@ -79,15 +83,42 @@ $hotels = [
 
         <?php if(count($hotels_filtered)>0){ ?>
         <!-- table -->
-        <table class="table w-75 m-auto">
+        <table class="table w-75 m-auto text-center">
             <tbody>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrizione</th>
+                    <th>Parcheggio</th>
+                    <th>Valutazione</th>
+                    <th>Ditanza dal centro</th>
+                </tr>
                 <?php foreach ($hotels_filtered as $cur_hotel) { ?>
                     <tr>
                         <?php foreach ($cur_hotel as $key => $value) { ?>
                             <td scope="row">
-                                <?php if($value === true){ $value = "si"; } elseif($value === false) { $value = "no"; } ?>
+                                <!-- check or cross for parking -->
+                                <?php if($value === true){ $value = "<span style=color:green>&check;</span>"; } elseif($value === false) { $value = "<span style=color:red>&cross;</span>"; } ?>
+                                <!-- add "km" at distance -->
                                 <?php if($key === "distance_to_center"){ $value.= " km"; } ?>
-                                <?php echo "$key : $value"; ?>
+                                <?php if($key === "vote"){
+                                    $copy=$value;
+                                    $value="";
+                                    for($i=0; $i<$copy; $i++){
+                                        $value .= "&#9733;";
+                                    }
+                                    for($i=0; $i<5-$copy; $i++){
+                                        $value .= "&#9734;";
+                                    }
+                                }
+                                ?>
+                                
+                                <?php if($key !== "vote"){
+                                    echo $value;
+                                }  else {
+                                    $value= "<span class='gold'> $value </span>";
+                                    echo $value;
+                                }
+                                 ?>
                             </td>
                         <?php } ?>
                     </tr>
