@@ -1,5 +1,4 @@
 <?php
-$count = 0;
 $hotels_filtered = [];
 $hotels = [
 
@@ -61,41 +60,49 @@ $hotels = [
 
 <body class="p-5 d-flex justify-content-center align-items-center flex-column">
 
+
     <!-- form -->
     <form class="pb-5 w-100 d-flex justify-content-center align-items-center gap-5" action="index.php" method="POST">
 
-        
+        <!--  button -->
         <button type="submit" class="btn btn-outline-success rounded-5">Cerca</button>
-        
+
         <div class="d-flex flex-column justify-content-center align-items-center gap-3">
+            <!-- search by vote -->
             <div>
-            <input class="rounded-5 p-2" id="voto" name="vote" type="number" min="1" max="5" value="1">
-            <label for="voto">voto da 1 a 5</label>
+                <input class="rounded-5 p-2" id="voto" name="vote" type="number" min="1" max="5" value="1">
+                <label for="voto">voto da 1 a 5</label>
             </div>
+
+            <!-- add parking required -->
             <div class="container">
                 <input id="park" name="park_required" type="checkbox">
-                <span class="checkbox"></span>
                 <label for="park">parcheggio</label>
             </div>
         </div>
 
-
     </form>
     <!-- /form -->
 
+    <!-- control park_required -->
     <?php if (isset($_POST['park_required'])) { ?>
         <?php $hotels_filtered = array_filter($hotels, function ($hotels) {
             return $hotels["parking"];
         }); ?>
+
+    <!-- else -->
     <?php } else { ?>
         <?php $hotels_filtered = $hotels; ?>
     <?php } ?>
+
+    <!-- vote key check at startup and filter by vote -->
     <?php if (isset($_POST["vote"])) { ?>
         <?php $hotels_filtered = array_filter($hotels_filtered, function ($hotels_filtered) {
             return $hotels_filtered["vote"] >= $_POST["vote"];
         }); ?>
     <?php } ?>
-
+    
+    <!-- shows the hotels found-->
     <?php if (count($hotels_filtered) > 0) { ?>
         <!-- table -->
         <table class="table w-75 m-auto text-center">
@@ -132,7 +139,6 @@ $hotels = [
                                     }
                                 }
                                 ?>
-
                                 <?php echo $value; ?>
                             </td>
                         <?php } ?>
@@ -141,6 +147,7 @@ $hotels = [
             </tbody>
         </table>
         <!-- /table -->
+    <!-- show message if no match found -->
     <?php } else { ?>
         <h1 class="pt-5">nessun hotel trovato!</h1>
     <?php } ?>
