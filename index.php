@@ -56,21 +56,28 @@ $hotels = [
 </head>
 
 <body>
+    <form action="index.php" method="POST">
+        <input type="text" name="search">
+        <button type="submit">click</button>
+    </form>
 
-    
-    <table class="table">
-        <tbody>
+    <?php if (!empty($_POST["search"]) || !isset($_POST["search"])){ ?>
+        <table class="table">
+            <tbody>
                 <?php foreach ($hotels as $cur_hotel) { ?>
-                <tr>
-                    <?php foreach ($cur_hotel as $key => $value) { ?>
-                        <td scope="row">
-                            <?php echo "$key : $value"; ?>
-                        </td>
+                    <tr>
+                        <?php foreach ($cur_hotel as $key => $value) { ?>
+                            <td scope="row">
+                                <?php echo "$key : $value"; ?>
+                            </td>
                         <?php } ?>
                     </tr>
-                    <?php } ?>
-        </tbody>
-    </table>
+                <?php } ?>
+            </tbody>
+        </table>
+        <?php } else { ?>
+            <p> insrisci qualcosa per la ricerca</p>
+    <?php } ?>
 
 </body>
 
