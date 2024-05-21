@@ -60,18 +60,18 @@ $hotels = [
 
 <body class="p-5 d-flex justify-content-center align-items-center flex-column">
 
-
     <!-- form -->
     <form class="pb-5 w-100 d-flex justify-content-center align-items-center gap-5" action="index.php" method="POST">
 
         <!--  button -->
         <button type="submit" class="btn btn-outline-success rounded-5">Cerca</button>
 
+        <!-- choice -->
         <div class="d-flex flex-column justify-content-center align-items-center gap-3">
             <!-- search by vote -->
-            <div>
+            <div class="">
                 <input class="rounded-5 p-2" id="voto" name="vote" type="number" min="1" max="5" value="1">
-                <label for="voto">voto da 1 a 5</label>
+                <label for="voto">Qualità: da 1 a 5 stelle</label>
             </div>
 
             <!-- add parking required -->
@@ -80,6 +80,7 @@ $hotels = [
                 <label for="park">parcheggio</label>
             </div>
         </div>
+        <!-- /choice -->
 
     </form>
     <!-- /form -->
@@ -104,9 +105,12 @@ $hotels = [
     
     <!-- shows the hotels found-->
     <?php if (count($hotels_filtered) > 0) { ?>
+
         <!-- table -->
         <table class="table w-75 m-auto text-center">
-            <tbody>
+
+            <!-- thead -->
+            <thead>
                 <tr>
                     <th>Nome</th>
                     <th>Descrizione</th>
@@ -114,6 +118,11 @@ $hotels = [
                     <th>Valutazione</th>
                     <th>Ditanza dal centro</th>
                 </tr>
+            </thead>
+            <!-- /thead -->
+
+            <!-- t-body -->
+            <tbody>
                 <?php foreach ($hotels_filtered as $cur_hotel) { ?>
                     <tr>
                         <?php foreach ($cur_hotel as $key => $value) { ?>
@@ -124,10 +133,15 @@ $hotels = [
                                 } elseif ($value === false) {
                                     $value = "<span style=color:red>&cross;</span>";
                                 } ?>
+                                <!-- /check or cross for parking -->
+
                                 <!-- add "km" at distance -->
                                 <?php if ($key === "distance_to_center") {
                                     $value .= " km";
                                 } ?>
+                                <!-- /add "km" at distance -->
+
+                                <!-- add star -->
                                 <?php if ($key === "vote") {
                                     $copy = $value;
                                     $value = "";
@@ -139,14 +153,19 @@ $hotels = [
                                     }
                                 }
                                 ?>
+                                <!-- /add star -->
+
                                 <?php echo $value; ?>
                             </td>
                         <?php } ?>
                     </tr>
                 <?php } ?>
             </tbody>
+            <!-- /t-body -->
+
         </table>
         <!-- /table -->
+
     <!-- show message if no match found -->
     <?php } else { ?>
         <h1 class="pt-5">nessun hotel trovato!</h1>
